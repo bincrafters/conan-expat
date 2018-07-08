@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, CMake, tools
-import os
 
 
 class ExpatConan(ConanFile):
@@ -11,8 +10,8 @@ class ExpatConan(ConanFile):
     description = "Fast XML parser in C"
     url = "https://github.com/bincrafters/conan-expat"
     license = "MIT"
-    exports = ['LICENSE.md', 'FindExpat.cmake']
-    exports_sources = ['CMakeLists.txt']
+    exports = ['LICENSE.md']
+    exports_sources = ['CMakeLists.txt', 'FindEXPAT.cmake']
     generators = "cmake"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
@@ -39,7 +38,7 @@ class ExpatConan(ConanFile):
         cmake.install()
 
     def package(self):
-        self.copy("FindExpat.cmake", ".", ".")
+        self.copy("FindEXPAT.cmake", ".", ".")
 
     def package_info(self):
         self.cpp_info.libs = ["expatd" if self.settings.build_type == "Debug" else "expat"]

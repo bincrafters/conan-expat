@@ -13,7 +13,7 @@ if (UNIX)
     endif ()
 endif ()
 
-find_package(Expat REQUIRED)
+find_package(EXPAT REQUIRED)
 
 add_executable(example example.c)
 target_link_libraries(example ${EXPAT_LIBRARY})
