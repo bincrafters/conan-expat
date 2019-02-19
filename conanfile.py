@@ -22,9 +22,15 @@ class ExpatConan(ConanFile):
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
 
+    @property
+    def _is_mingw(self):
+        return self.settings.os == "Windows" and self.settings.compiler == "gcc"
+
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
+        if self._is_mingw:
+            del self.options.shared
 
     def configure(self):
         del self.settings.compiler.libcxx
@@ -41,7 +47,8 @@ class ExpatConan(ConanFile):
         cmake.definitions['BUILD_examples'] = False
         cmake.definitions['BUILD_tests'] = False
         cmake.definitions['BUILD_tools'] = False
-        cmake.definitions['BUILD_shared'] = self.options.shared
+        if not self._is_mingw:
+            cmake.definitions['BUILD_shared'] = self.options.shared
         cmake.configure(build_dir=self._build_subfolder)
         return cmake
 
@@ -56,6 +63,6 @@ class ExpatConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
-        if not self.options.shared:
+        if not self._is_mingw and not self.options.shared:
             self.cpp_info.defines = ["XML_STATIC"]
 
