@@ -20,6 +20,7 @@ class ExpatConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
     _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -41,7 +42,7 @@ class ExpatConan(ConanFile):
         cmake.definitions['BUILD_tests'] = False
         cmake.definitions['BUILD_tools'] = False
         cmake.definitions['BUILD_shared'] = self.options.shared
-        cmake.configure()
+        cmake.configure(build_dir=self._build_subfolder)
         return cmake
 
     def build(self):
