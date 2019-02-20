@@ -1,6 +1,7 @@
+cmake_minimum_required(VERSION 2.8.11)
 project(cmake_wrapper)
 
 include(conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_subdirectory(libexpat-R_2_2_5/expat)
+add_subdirectory(source_subfolder/expat)
