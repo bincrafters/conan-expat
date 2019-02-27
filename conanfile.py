@@ -28,6 +28,7 @@ class ExpatConan(ConanFile):
 
     def configure(self):
         del self.settings.compiler.libcxx
+        self.output.warn("[DEPRECATED] Package expat/bincrafters is being deprecated. Change yours to require Expat/pix4d instead")
 
     def source(self):
         sha256 = "b3781742738611eaa737543ee94264dd511c52a3ba7e53111f7d705f6bff65a8"
@@ -58,4 +59,3 @@ class ExpatConan(ConanFile):
         self.cpp_info.libs = tools.collect_libs(self)
         if not self.options.shared:
             self.cpp_info.defines = ["XML_STATIC"]
-
